@@ -55,7 +55,7 @@ public class BookController {
 
     @GetMapping("/get-book-by-id/{id}")
     public ResponseEntity<Book> getBookById(@PathVariable("id") String id){
-        return new ResponseEntity<>(bookList.get(Integer.parseInt(id)), HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(bookList.get(Integer.parseInt(id)-1), HttpStatus.ACCEPTED);
     }
 
     @GetMapping("/get-all-books")
