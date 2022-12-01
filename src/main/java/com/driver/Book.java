@@ -1,18 +1,14 @@
 package com.driver;
 
 public class Book {
-    
-     private int id;
 
-     private String name;
+    private int id;
 
-     private String genre;
-     
-     private String author;
+    private String name;
 
-     public Book(){
+    private String genre;
 
-     }
+    private String author;
 
     public Book(String name, String genre, String author) {
         this.name = name;
@@ -50,5 +46,9 @@ public class Book {
 
     public void setAuthor(String author) {
         this.author = author;
+    }
+
+    public Book(){
+
     }
 }

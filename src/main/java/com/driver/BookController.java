@@ -47,28 +47,53 @@ public class BookController {
     @PostMapping("/create-book")
     public ResponseEntity<Book> createBook(@RequestBody Book book){
         // Your code goes here.
+        book.setId(id++);
+        bookList.add(book);
         return new ResponseEntity<>(book, HttpStatus.CREATED);
     }
 
-    // get request /get-book-by-id/{id}
-    // pass id as path variable
-    // getBookById()
+    @GetMapping("/get-book-by-id/{id}")
+    public ResponseEntity<Book> getBookById(@PathVariable("id") int id){
+        return new ResponseEntity<>(bookList.get(id), HttpStatus.ACCEPTED);
+    }
 
-    // delete request /delete-book-by-id/{id}
-    // pass id as path variable
-    // deleteBookById()
+    @GetMapping("/get-all-books")
+    public ResponseEntity<List<Book>> getAllBooks(){
+        return new ResponseEntity<>(new ArrayList<>(bookList), HttpStatus.ACCEPTED);
+    }
 
-    // get request /get-all-books
-    // getAllBooks()
+    @GetMapping("/get-books-by-author")
+    public ResponseEntity<List<Book>> getBookByAuthor(@RequestParam("author") String author){
+        List<Book> ans=new ArrayList<>();
+        for(Book b:new ArrayList<>(bookList)){
+            if(b.getAuthor().equals(author)) ans.add(b);
+        }
+        return new ResponseEntity<>(ans, HttpStatus.ACCEPTED);
+    }
 
-    // delete request /delete-all-books
-    // deleteAllBooks()
+    @GetMapping("/get-books-by-genre")
+    public ResponseEntity<List<Book>> getBookByGenre(@RequestParam("genre") String genre){
+        List<Book> ans=new ArrayList<>();
+        for(Book b:new ArrayList<>(bookList)){
+            if(b.getGenre().equals(genre)) ans.add(b);
+        }
+        return new ResponseEntity<>(ans, HttpStatus.ACCEPTED);
+    }
 
-    // get request /get-books-by-author
-    // pass author name as request param
-    // getBooksByAuthor()
+    @DeleteMapping("/delete-book-by-id/{id}")
+    public ResponseEntity deleteBookById(@PathVariable("id") int id){
+        for(Book b:new ArrayList<>(bookList)){
+            if(b.getId()==id){
+                bookList.remove(id);
+                break;
+            }
+        }
+        return new ResponseEntity<>("Success", HttpStatus.ACCEPTED);
+    }
 
-    // get request /get-books-by-genre
-    // pass genre name as request param
-    // getBooksByGenre()
+    @DeleteMapping("/delete-all-books")
+    public ResponseEntity deleteBookById(){
+        bookList.clear();
+        return new ResponseEntity<>("Success", HttpStatus.ACCEPTED);
+    }
 }
