@@ -85,7 +85,7 @@ public class BookController {
     public ResponseEntity deleteBookById(@PathVariable("id") String id){
         for(Book b:new ArrayList<>(bookList)){
             if(b.getId()==Integer.parseInt(id)){
-                bookList.remove(id);
+                bookList.remove(Integer.parseInt(id)-1);
                 break;
             }
         }
