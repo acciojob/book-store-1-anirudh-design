@@ -47,25 +47,26 @@ public class BookController {
     @PostMapping("/create-book")
     public ResponseEntity<Book> createBook(@RequestBody Book book){
         // Your code goes here.
-        book.setId(id++);
+        book.setId(id);
+        id++;
         bookList.add(book);
         return new ResponseEntity<>(book, HttpStatus.CREATED);
     }
 
     @GetMapping("/get-book-by-id/{id}")
-    public ResponseEntity<Book> getBookById(@PathVariable("id") int id){
-        return new ResponseEntity<>(bookList.get(id), HttpStatus.ACCEPTED);
+    public ResponseEntity<Book> getBookById(@PathVariable("id") String id){
+        return new ResponseEntity<>(bookList.get(Integer.parseInt(id)), HttpStatus.ACCEPTED);
     }
 
     @GetMapping("/get-all-books")
     public ResponseEntity<List<Book>> getAllBooks(){
-        return new ResponseEntity<>(new ArrayList<>(bookList), HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(getBookList(), HttpStatus.ACCEPTED);
     }
 
     @GetMapping("/get-books-by-author")
     public ResponseEntity<List<Book>> getBookByAuthor(@RequestParam("author") String author){
         List<Book> ans=new ArrayList<>();
-        for(Book b:new ArrayList<>(bookList)){
+        for(Book b:bookList){
             if(b.getAuthor().equals(author)) ans.add(b);
         }
         return new ResponseEntity<>(ans, HttpStatus.ACCEPTED);
@@ -81,9 +82,9 @@ public class BookController {
     }
 
     @DeleteMapping("/delete-book-by-id/{id}")
-    public ResponseEntity deleteBookById(@PathVariable("id") int id){
+    public ResponseEntity deleteBookById(@PathVariable("id") String id){
         for(Book b:new ArrayList<>(bookList)){
-            if(b.getId()==id){
+            if(b.getId()==Integer.parseInt(id)){
                 bookList.remove(id);
                 break;
             }
@@ -92,7 +93,7 @@ public class BookController {
     }
 
     @DeleteMapping("/delete-all-books")
-    public ResponseEntity deleteBookById(){
+    public ResponseEntity deleteAllBook(){
         bookList.clear();
         return new ResponseEntity<>("Success", HttpStatus.ACCEPTED);
     }
