@@ -64,7 +64,7 @@ public class BookController {
     }
 
     @GetMapping("/get-books-by-author")
-    public ResponseEntity<List<Book>> getBookByAuthor(@RequestParam("author") String author){
+    public ResponseEntity<List<Book>> getBooksByAuthor(@RequestParam("author") String author){
         List<Book> ans=new ArrayList<>();
         for(Book b:bookList){
             if(b.getAuthor().equals(author)) ans.add(b);
@@ -73,7 +73,7 @@ public class BookController {
     }
 
     @GetMapping("/get-books-by-genre")
-    public ResponseEntity<List<Book>> getBookByGenre(@RequestParam("genre") String genre){
+    public ResponseEntity<List<Book>> getBooksByGenre(@RequestParam("genre") String genre){
         List<Book> ans=new ArrayList<>();
         for(Book b:new ArrayList<>(bookList)){
             if(b.getGenre().equals(genre)) ans.add(b);
@@ -93,7 +93,7 @@ public class BookController {
     }
 
     @DeleteMapping("/delete-all-books")
-    public ResponseEntity deleteAllBook(){
+    public ResponseEntity deleteAllBooks(){
         bookList.clear();
         return new ResponseEntity<>("Success", HttpStatus.ACCEPTED);
     }
